@@ -15,11 +15,12 @@ const serpmeKahvalti = {isim: "Serpme Kahvaltı", fiyat: 16, kategori:"Kahvaltı
 */
 
 
-function MenuElemaniOlustur(/*Kodlar buraya*/){
-	/*Kodlar buraya*/
+function MenuElemaniOlustur(urunisim, urunfiyat, urunkategori){
+	const isim = {isim: urunisim, fiyat: urunfiyat, kategori: urunkategori}
+	return isim
 }
 
-
+//console.log(MenuElemaniOlustur('Cheeseburger', 8, 'Burgerler'))
 
 /*  Görev 1b (otomatik test yok): 
 	Fonksiyonu çağırın!
@@ -31,7 +32,7 @@ function MenuElemaniOlustur(/*Kodlar buraya*/){
 	Örnek: MenuElemaniOlustur("Karışık Pizza",5,"Pizzalar") şunu döndürür: {isim:"Karışık Pizza",fiyat:5,kategori:"Pizzalar"}
 */
 
-
+//console.log(MenuElemaniOlustur("ayvaliktostu", 5, "tostlar"))
 
 /* Görev 2: 
 	Özel bir öğle yemeği yiyorsun! Öğretmen ve öğrencilere %25, diğer kişilere %10 indirim var. Aşağıdaki burger nesnesine, indirimi fiyatı otomatik olarak hesaplayan bir metot ekleyin.
@@ -50,10 +51,16 @@ const burger = {
 	isim: "Burger", 
 	fiyat: 18, 
 	kategori: "Öğle Yemeği", 
-
+	indirim: function (statu) {
+		if (statu==="öğretmen"|| statu==="öğrenci") {
+			return burger.fiyat-burger.fiyat*25/100;
+		} else {
+			return burger.fiyat-burger.fiyat*10/100;
+		}
+	}
 }
 
-
+//console.log(burger.indirim("diğer"))
 
 ///////////////Değerlendirmeler (MVP)///////////////////
 const degerlendirmeler = [
@@ -72,7 +79,7 @@ const degerlendirmeler = [
 	1. Sadece Ahmet'in geribildirimini konsolda görüntüleyin - fonksiyona gerek yok
 */
 
-
+//console.log(degerlendirmeler[5].geribildirim)
 
 /*  Görev 4 (ototest yok):  
 	Reyna'nın geribildirimi girilmemiş! Aşağıdakileri uygulayın: (fonksiyona gerek yok) 
@@ -80,7 +87,8 @@ const degerlendirmeler = [
 	2. degerlendirmeler dizisini konsolda görüntüleyerek çalışmanızı kontrol edin
 */
 
-
+degerlendirmeler[7]["geribildirim"] = "bu mekan bir harika dostum, yine de garsonun gülümsememesinden puan kırdım"
+//console.log(degerlendirmeler[7])
 
 /*  Görev 5: 
 	isim, puan, geribildirim'i içeren bir değerlendirme nesnesi oluşturup, yeni değerlendirmeyi mevcut dizinin(array) sonuna ekleyip sonuç dizisini döndüren bir fonksiyon tanımlayın. 
@@ -94,12 +102,14 @@ const degerlendirmeler = [
 */
 
 
-function DegerlendirmeEkle(/*Kodlar buraya */){
-	/*Kodlar buraya */
-	
+function DegerlendirmeEkle(girilendegerlendirmeler, girilenisim, girilenpuan, yorum){
+	const yeniyorum = {isim: girilenisim, puan: girilenpuan, geribildirim: yorum}
+	girilendegerlendirmeler.push(yeniyorum)
+	return girilendegerlendirmeler
 }
+//DegerlendirmeEkle(degerlendirmeler, 'Hurşut', 2, 'Boktan yemekler!')
 
-
+//console.log(degerlendirmeler)
 
 /*  Görev 6: 
 	Dizideki değerlendirmelerin anahtarına(key,index) bağlı olarak bir değerlendirme döndüren bir fonksiyon yazın
@@ -112,12 +122,13 @@ function DegerlendirmeEkle(/*Kodlar buraya */){
 */
 
 
-function AnahtardanDegerlendirmeAl(/*Kodlar buraya*/) {
-	/*Kodlar buraya*/
-
+function AnahtardanDegerlendirmeAl(dizi, indeks) {
+	const yorum = dizi[indeks];
+	const metin = `${yorum.isim} isimli kişi ${yorum.puan} puan verdi ve şunları yazdı: ${yorum.geribildirim}`
+return metin
 }
 
-
+//console.log(AnahtardanDegerlendirmeAl(degerlendirmeler,0))
 
 /*  Görev 7:  
 	Diziden en son değerlendirmeyi döndüren adı `SonDegerlendirmeyiAl` olan bir fonksiyon yazın 
@@ -132,11 +143,13 @@ function AnahtardanDegerlendirmeAl(/*Kodlar buraya*/) {
 */
 
 
-function SonDegerlendirmeyiAl(/*Kodlar buraya*/) {
-	/*Kodlar buraya*/
+function SonDegerlendirmeyiAl(dizi) {
+	const soneleman = dizi[dizi.length-1];
+	const metin = `${soneleman.isim} isimli kişi ${soneleman.puan} puan verdi ve şunları yazdı: ${soneleman.geribildirim}`;
+	return metin;
 } 
 
-
+//console.log(SonDegerlendirmeyiAl(degerlendirmeler))
 
 /////////////// BONUS  GÖRVLER////////////////////
 
@@ -154,10 +167,16 @@ function SonDegerlendirmeyiAl(/*Kodlar buraya*/) {
 	]
 */
 
-function PuanaGoreDegerlendirmeAl(/* Kodlar buraya */) {
-    /* Kodlar buraya */
+function PuanaGoreDegerlendirmeAl(dizi, girilenpuan) {
+    const result = [];
+	for (const i of dizi) {
+		if (Math.floor(i.puan) === girilenpuan) {
+			result.push(i);
+		}
+	} return result
 }
 
+//console.log(PuanaGoreDegerlendirmeAl(degerlendirmeler, 3))
 
 /*  BONUS 2:    
 	UzunDegerlendirmeleriAl fonksiyonuna aşağıdakileri uygulayın:
@@ -166,10 +185,18 @@ function PuanaGoreDegerlendirmeAl(/* Kodlar buraya */) {
 	
 */
 
-function UzunDegerlendirmeleriAl(/* Kodlar buraya */) {
-    /* Kodlar buraya */
+function UzunDegerlendirmeleriAl(dizi) {
+    const result = [];
+	for (const i of dizi) {
+		const kelimeler = i.geribildirim.split(" ");
+		if (kelimeler.length > 15) {
+			result.push(i);
+		}
+	}
+	return result
 }
 
+//console.log(UzunDegerlendirmeleriAl(degerlendirmeler))
 
 /*  BONUS 3:  
 	Bu ek görevde degerlendirmeler dizisi kullanılmayacak!  Bu görevde kendi nesnenizi yaratmanız gerekmektedir.
@@ -189,11 +216,23 @@ function UzunDegerlendirmeleriAl(/* Kodlar buraya */) {
 */
 
 
-function arabaYapici(/* Kodlar buraya */) {
-    /* Kodlar buraya */
-    
+function arabaYapici(km) {
+    const araba = {
+		kilometre : km,
+		surus: function(yol){
+			this.kilometre += yol;
+			return this.kilometre
+		}
+	}
+    return araba
 }
 
+const passat = arabaYapici(150000);
+const yol1 = passat.surus(800);
+const yol2 = passat.surus(20);
+const yol3 = passat.surus(800);
+
+console.log(arabaYapici())
 
 /*  Buradan aşağıdaki kodları değiştirmeyin lütfen */
 function sa(){
